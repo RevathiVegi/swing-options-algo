@@ -1,29 +1,31 @@
-# Virtual env
-.venv/
-
-# Python caches
+# python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.egg-info/
 
-# Environment secrets
+# virtual env
+.venv/
+venv/
+env/
+
+# local config / secrets
 .env
+.env.local
+.env.*.local
+.DS_Store
 
-# Logs & output
-logs/
+# data / output / logs
 out/
-out_test/
-out_batch/
-output/
+out_*/
+out_*
+logs/
+*.log
+state.db
+*.csv
+*.png
 
-# Backtest data
-backtest_data/
-trades_*.csv
-equity_*.csv
-*.bak.csv
-
-# Local deliverables / zips
-*.zip
-*.bundle
-
-# Editor settings
-*.swp
+# IDE/editor
+.vscode/
+.idea/
