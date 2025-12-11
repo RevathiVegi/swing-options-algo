@@ -1,31 +1,23 @@
 # python
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-*.egg-info/
 
 # virtual env
 .venv/
-venv/
-env/
 
-# local config / secrets
+# secrets
 .env
-.env.local
-.env.*.local
-.DS_Store
+.env.*
 
-# data / output / logs
+# outputs / logs / data
 out/
 out_*/
-out_*
 logs/
 *.log
-state.db
 *.csv
 *.png
+state.db
 
-# IDE/editor
+# IDE
 .vscode/
 .idea/
