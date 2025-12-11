@@ -21,3 +21,16 @@ state.db
 # IDE
 .vscode/
 .idea/
+
+# added by release script
+.env
+.env.*
+*.log
+*.csv
+*.png
+out/
+out_*/
+logs/
+state.db
+.venv/
+deliverables/archives/
