@@ -1,0 +1,12 @@
+symbols:
+  - NIFTY_SYNTH
+  - RELIANCE_SYNTH
+
+seed: 42
+
+selectors:
+  delta_range: [0.30, 0.70]
+  min_open_interest: 10
+  min_volume: 0
+
+direction: random
