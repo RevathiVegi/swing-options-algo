@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  swing-options:
+    build: .
+    container_name: swing-options-container
+    command: python simulator.py -c swing_options/config/production.yaml
+    volumes:
+      - .:/app
+    restart: unless-stopped

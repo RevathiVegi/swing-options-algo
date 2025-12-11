@@ -1,0 +1,24 @@
+symbol: NIFTY
+mode: live
+
+selection:
+  min_open_interest: 50
+  min_volume: 10
+  delta_min: 0.3
+  delta_max: 0.7
+
+lot_size:
+  fixed_lots: 1
+
+fees:
+  per_trade_fee: 0.1
+
+exit:
+  target_pct: 5
+  stoploss_pct: 20
+  eod_exit_enabled: true
+  eod_time: "15:25"
+
+risk:
+  max_trades_per_day: 4
+  max_loss_per_day_pct: 2.0
