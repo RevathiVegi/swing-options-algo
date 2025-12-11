@@ -13,13 +13,22 @@ import uuid
 logger = logging.getLogger(__name__)
 
 
-def ensure_trade_pnl(trade: Dict[str, Any]) -> Dict[str, Any]:
+
+def ensure_trade_pnl(trade: dict) -> dict:
     """
-    Ensure trade contains realized_pnl, unrealized_pnl and net_pnl keys.
-    Convention: quantity > 0 means LONG (profit = (exit - entry) * qty).
+    Normalize and ensure PnL fields. Backwards-compatible behavior:
+    - If trade contains 'pnl_rupees' or 'pnl', treat that as authoritative net PnL.
+    - Otherwise compute realized/unrealized/net = realized + unrealized - fees.
+    - Always set: realized_pnl, unrealized_pnl, net_pnl, fees, pnl_rupees, pnl.
     """
-    fees = float(trade.get("fees", 0.0))
-    qty = float(trade.get("quantity", 0.0))
+    def _to_float(v, default=0.0):
+        try:
+            return float(v)
+        except Exception:
+            return default
+
+    fees = _to_float(trade.get("fees", 0.0))
+    qty = _to_float(trade.get("quantity", 0.0))
     entry = trade.get("entry_price")
     exitp = trade.get("exit_price")
     mark = trade.get("mark_price", exitp if exitp is not None else entry)
@@ -31,8 +40,17 @@ def ensure_trade_pnl(trade: Dict[str, Any]) -> Dict[str, Any]:
 
     realized_pnl = pnl_for_prices(entry, exitp) if exitp is not None else 0.0
     unrealized_pnl = pnl_for_prices(entry, mark) if exitp is None else 0.0
-    net_pnl = realized_pnl + unrealized_pnl - fees
+    computed_net = realized_pnl + unrealized_pnl - fees
 
+    # Honor supplied alias values if present
+    if "pnl_rupees" in trade:
+        net_pnl = _to_float(trade.get("pnl_rupees"))
+    elif "pnl" in trade:
+        net_pnl = _to_float(trade.get("pnl"))
+    else:
+        net_pnl = computed_net
+
+    # rounding / hygiene
     try:
         realized_pnl = float(round(realized_pnl, 6))
         unrealized_pnl = float(round(unrealized_pnl, 6))
@@ -45,14 +63,19 @@ def ensure_trade_pnl(trade: Dict[str, Any]) -> Dict[str, Any]:
     trade["net_pnl"] = net_pnl
     trade["fees"] = fees
 
+    # back-compat aliases
+    trade["pnl_rupees"] = net_pnl
+    trade["pnl"] = net_pnl
+
+    import math
     if math.isinf(net_pnl) or math.isnan(net_pnl):
-        logger.warning("Computed NaN/Inf PnL for trade %s — zeroing values", trade.get("id"))
         trade["realized_pnl"] = 0.0
         trade["unrealized_pnl"] = 0.0
         trade["net_pnl"] = 0.0
+        trade["pnl_rupees"] = 0.0
+        trade["pnl"] = 0.0
 
     return trade
-
 
 class TradeBook:
     """In-memory trade book with simple open/close/update operations."""
