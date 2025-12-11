@@ -1,0 +1,29 @@
+# Virtual env
+.venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Environment secrets
+.env
+
+# Logs & output
+logs/
+out/
+out_test/
+out_batch/
+output/
+
+# Backtest data
+backtest_data/
+trades_*.csv
+equity_*.csv
+*.bak.csv
+
+# Local deliverables / zips
+*.zip
+*.bundle
+
+# Editor settings
+*.swp
