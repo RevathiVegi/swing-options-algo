@@ -34,3 +34,7 @@ logs/
 state.db
 .venv/
 deliverables/archives/
+
+# deliverables / build artifacts
+deliverables/
+*.zip
