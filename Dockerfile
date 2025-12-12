@@ -14,3 +14,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Default command
 CMD ["python", "simulator.py", "-c", "swing_options/config/production.yaml"]
+
+# Ensure logs/out folder exist and add a non-root user
+RUN mkdir -p /app/logs /app/out \
+ && groupadd -r appuser || true \
+ && useradd -r -g appuser -d /home/appuser -s /sbin/nologin appuser || true \
+ && chown -R appuser:appuser /app
+
+USER appuser
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD [ -f "/app/logs/sim.log" ] || exit 1
+
+
