@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  simulator:
+    image: swing-options-algo:1.0.0
+    restart: always
+    environment:
+      - SIM_RUN_INTERVAL=60
+    volumes:
+      - ./out:/app/out
+      - ./logs:/app/logs
+      - ./tools:/app/tools:ro
