@@ -38,3 +38,4 @@ deliverables/archives/
 # deliverables / build artifacts
 deliverables/
 *.zip
+run_loop.sh
