@@ -1,0 +1,6 @@
+Handover Checklist
+- Install Docker Desktop (Windows) or Docker + docker-compose (Linux).
+- Place this folder somewhere convenient.
+- Run START_SYSTEM.bat (Windows) OR ./start.sh (Linux).
+- Confirm container is healthy: `docker ps` and `docker inspect --format='{{json .State.Health}}' swing-sim`
+- Check logs: client_handover/logs/sim.log
