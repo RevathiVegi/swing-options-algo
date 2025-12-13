@@ -1,7 +1,2 @@
-#!/usr/bin/env bash
-set -e
-DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$DIR"
-echo "Stopping Swing Options simulation..."
+#!/bin/sh
 docker compose down
-echo "Stopped."

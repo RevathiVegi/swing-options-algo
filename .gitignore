@@ -39,3 +39,8 @@ deliverables/archives/
 deliverables/
 *.zip
 run_loop.sh
+
+# client handover artifacts (DO NOT COMMIT)
+client_handover/*.tar
+client_handover/**/*.tar
+swing-options-clean/

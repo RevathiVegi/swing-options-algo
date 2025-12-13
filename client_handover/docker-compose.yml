@@ -1,18 +1,8 @@
-version: "3.9"
 services:
   swing-sim:
-    image: swing-options-algo:latest
+    image: swing-options-algo:clean
     container_name: swing-sim
     restart: unless-stopped
-    environment:
-      SIM_RUN_INTERVAL: "10"
     volumes:
-      - ./out:/app/out
       - ./logs:/app/logs
-      - ./tools:/app/tools:ro
-    healthcheck:
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-      test: ["CMD", "sh", "-c", "pgrep -f simulator.py >/dev/null 2>&1 && [ -f /app/logs/sim.log ] && test $(stat -c %Y /app/logs/sim.log) -ge $(( $(date +%s) - 120 )) || exit 1"]
+      - ./out:/app/out
